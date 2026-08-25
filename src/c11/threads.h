@@ -49,16 +49,6 @@
 
 #if defined(HAVE_THRD_CREATE)
 #include <threads.h>
-
-#if defined(ANDROID)
-/* Currently, only Android are verified that it's thrd_t are typedef of pthread_t
- * So we can define _MTX_INITIALIZER_NP to PTHREAD_MUTEX_INITIALIZER
- * FIXME: temporary non-standard hack to ease transition
- */
-#  define _MTX_INITIALIZER_NP PTHREAD_MUTEX_INITIALIZER
-#else
-#error Can not define _MTX_INITIALIZER_NP properly for this platform
-#endif
 #else
 
 /*---------------------------- macros ---------------------------*/
@@ -130,8 +120,6 @@ typedef pthread_key_t   tss_t;
 typedef pthread_mutex_t mtx_t;
 #ifndef __once_flag_defined
 typedef pthread_once_t  once_flag;
-// FIXME: temporary non-standard hack to ease transition
-#  define _MTX_INITIALIZER_NP PTHREAD_MUTEX_INITIALIZER
 #  define ONCE_FLAG_INIT PTHREAD_ONCE_INIT
 #endif
 #  ifdef PTHREAD_DESTRUCTOR_ITERATIONS
